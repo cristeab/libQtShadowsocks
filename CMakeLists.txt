@@ -4,7 +4,7 @@ project(QtShadowsocks
         VERSION 2.1.0
         LANGUAGES CXX)
 
-option(BUILD_SHARED_LIBS "Build ${PROJECT_NAME} as a shared library" ON)
+option(BUILD_SHARED_LIBS "Build ${PROJECT_NAME} as a shared library" OFF)
 
 set(LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib
     CACHE PATH "Installation directory for libraries")
@@ -16,11 +16,12 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-find_package(Qt5Core 5.5)
-find_package(Qt5Network 5.5)
+find_package(Qt5Core)
+find_package(Qt5Network)
 find_package(PkgConfig)
 
-pkg_search_module(BOTAN REQUIRED botan-2>=2.3.0 botan-1.10)
+#pkg_search_module(BOTAN REQUIRED botan-2>=2.3.0 botan-1.10)
+pkg_search_module(BOTAN REQUIRED botan)
 if(BOTAN_VERSION VERSION_GREATER 2.0)
     message(STATUS "Botan-2 is found and will be used in this build")
     add_definitions(-DUSE_BOTAN2)
