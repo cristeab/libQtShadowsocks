@@ -1,0 +1,10 @@
+prefix=C:/Botan
+exec_prefix=${prefix}
+includedir=${prefix}/include
+libdir=${exec_prefix}/lib
+
+Name: Botan
+Description: The botan library
+Version: 2.4.0
+Cflags: -I${includedir}/botan-2
+Libs: -L${libdir} -lbotan

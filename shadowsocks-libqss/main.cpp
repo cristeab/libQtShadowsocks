@@ -86,6 +86,9 @@ int main(int argc, char *argv[])
     QCommandLineOption autoBan("autoban",
                 "automatically ban IPs that send malformed header. "
                 "ignored in local mode.");
+    QCommandLineOption logFile(
+                QStringList() << "f" << "logfile",
+                "put log messages into <file> (append if file exists).", "file");
     parser.addOption(configFile);
     parser.addOption(serverAddress);
     parser.addOption(serverPort);
@@ -99,9 +102,12 @@ int main(int argc, char *argv[])
     parser.addOption(testSpeed);
     parser.addOption(debug);
     parser.addOption(autoBan);
+    parser.addOption(logFile);
     parser.process(a);
 
     Utils::debugEnabled = parser.isSet(debug);
+    Utils::initLogFile(parser.value(logFile));
+
     Client c;
     if (!c.readConfig(parser.value(configFile))) {
         c.setup(parser.value(serverAddress),

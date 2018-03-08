@@ -23,6 +23,9 @@
 
 #include <QtGlobal>
 #include <QStringList>
+#include <QTextStream>
+#include <QFile>
+#include <QMutex>
 
 class Utils
 {
@@ -40,6 +43,13 @@ public:
     static void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
     static bool debugEnabled;
+
+    //used to write logs into file
+    static void initLogFile(const QString& logFilename);
+    static QTextStream textStream;
+    static QFile logFile;
+    static QMutex logMutex;
+    static bool isValidStream;
 };
 
 #endif // UTILS_H
