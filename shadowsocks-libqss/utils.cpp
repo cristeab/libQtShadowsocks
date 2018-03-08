@@ -5,6 +5,24 @@
 #include "utils.h"
 
 bool Utils::debugEnabled = false;
+QTextStream Utils::textStream;
+QFile Utils::logFile;
+QMutex Utils::logMutex;
+bool Utils::isValidStream = false;
+
+void Utils::initLogFile(const QString& logFilename)
+{
+    if (logFilename.isEmpty()) {
+        return;
+    }
+    logFile.setFileName(logFilename);
+    if (!logFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
+        std::cerr << "Cannot open " << logFilename.toStdString() << " for writing" << std::endl;
+        return;
+    }
+    textStream.setDevice(&logFile);
+    isValidStream = true;
+}
 
 void Utils::testSpeed(const std::string &method, uint32_t data_size_mb)
 {
@@ -36,26 +54,49 @@ void Utils::testSpeed(uint32_t data_size_mb)
 
 void Utils::messageHandler(QtMsgType type, const QMessageLogContext &, const QString &msg)
 {
-    const std::string timestamp =
-            QDateTime::currentDateTime().toString("yyyy-MM-ddTHH:mm:ss.zzz").toStdString();
-    const std::string message = msg.toStdString();
+    QMutexLocker locker(&logMutex);
+    const QString timestamp =
+            QDateTime::currentDateTime().toString("yyyy-MM-ddTHH:mm:ss.zzz");
     switch(type) {
     case QtDebugMsg:
         if (Utils::debugEnabled) {
-            std::cout << timestamp << " DEBUG: " << message << std::endl;
+            std::cout << timestamp.toStdString() << " DEBUG: " << msg.toStdString() << std::endl;
         }
         break;
     case QtInfoMsg:
-        std::cout << timestamp << " INFO: " << message << std::endl;
+        std::cout << timestamp.toStdString() << " INFO: " << msg.toStdString() << std::endl;
         break;
     case QtWarningMsg:
-        std::cerr << timestamp << " WARN: " << message << std::endl;
+        std::cerr << timestamp.toStdString() << " WARN: " << msg.toStdString() << std::endl;
         break;
     case QtCriticalMsg:
-        std::cerr << timestamp << " ERROR: " << message << std::endl;
+        std::cerr << timestamp.toStdString() << " ERROR: " << msg.toStdString() << std::endl;
         break;
     case QtFatalMsg:
-        std::cerr << timestamp << " FATAL: " << message << std::endl;
+        std::cerr << timestamp.toStdString() << " FATAL: " << msg.toStdString() << std::endl;
         abort();
+    }
+
+    if (isValidStream) {
+        switch(type) {
+        case QtDebugMsg:
+            if (Utils::debugEnabled) {
+                textStream << timestamp << " DEBUG: " << msg;
+                endl(textStream);
+            }
+            break;
+        case QtInfoMsg:
+            textStream << timestamp << " INFO: " << msg;
+            endl(textStream);
+            break;
+        case QtWarningMsg:
+            textStream << timestamp << " WARN: " << msg;
+            endl(textStream);
+            break;
+        case QtCriticalMsg:
+            textStream << timestamp << " ERROR: " << msg;
+            endl(textStream);
+            break;
+        }
     }
 }
