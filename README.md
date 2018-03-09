@@ -19,7 +19,7 @@ Check [installation wiki page](https://github.com/shadowsocks/libQtShadowsocks/w
 Compilation Instructions for Windows
 -------
 
-* requirements: Visual Studio 2015 Community Edition, Python 3.6+, Qt 5.10.1, pkg-config for Windows, cmake 3.9+
+* requirements: Visual Studio 2015 Community Edition, Python 3.6+, Qt 5.10.1 for VS 2015 x64, pkg-config for Windows, cmake 3.9+
 
 * compile Botan library:
 
