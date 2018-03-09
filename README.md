@@ -65,7 +65,7 @@ Compilation Instructions for Windows
 
   - open with QtCreator CMakeLists.txt file and and run cmake, then build the entire project using "Release with Debug Information" build option
 
-  - in order to run the resulting binary make sure that the path to Qt DLLs is in your PATH environment variable (e.g. C:\Qt\5.10.1\msvc2015_64\bin)
+  - in order to run the resulting binary make sure that the path to Qt DLLs is in your PATH environment variable (e.g. C:\Qt\5.10.1\msvc2015_64\bin) as well as the path to Botan library (e.g. C:\Botan\lib)
 
 License
 -------
