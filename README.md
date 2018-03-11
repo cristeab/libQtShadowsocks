@@ -61,6 +61,14 @@ Compilation Instructions for Windows
 
   - in order to run the resulting binary make sure that the path to Qt DLLs is in your PATH environment variable (e.g. C:\Qt\5.10.1\msvc2015_64\bin)
 
+Running as Windows Service
+-------
+
+- you must copy next to the service executable all required dependences (DLLs). In order to do so you must manually copy botan.dll and all required Qt libraries running the command below from the service executable folder:
+    C:\Qt\5.10.1\msvc2015_64\bin\windeployqt.exe --release shadowsocks-libqss.exe
+
+- also remember to pass only absolute paths as command line options when starting the service
+
 License
 -------
 
