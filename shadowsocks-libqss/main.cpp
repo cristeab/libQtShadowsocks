@@ -55,29 +55,29 @@ protected:
         QCommandLineParser parser;
         parser.addHelpOption();
         parser.addVersionOption();
-        QCommandLineOption configFile("c",
+        QCommandLineOption configFile("config-file",
                                       "specify config.json file.",
                                       "config_file",
                                       "config.json");
-        QCommandLineOption serverAddress("s",
+        QCommandLineOption serverAddress("server-address",
                                   "host name or IP address of your remote server.",
                                   "server_address");
-        QCommandLineOption serverPort("p", "port number of your remote server.",
+        QCommandLineOption serverPort("server-port", "port number of your remote server.",
                                       "server_port");
-        QCommandLineOption localAddress("b",
+        QCommandLineOption localAddress("local-address",
                                   "local address to bind. ignored in server mode.",
                                   "local_address",
                                   "127.0.0.1");
-        QCommandLineOption localPort("l",
+        QCommandLineOption localPort("local-port",
                       "port number of your local server. ignored in server mode.",
                       "local_port");
-        QCommandLineOption password("k",
+        QCommandLineOption password("password",
                                     "password of your remote server.",
                                     "password");
-        QCommandLineOption encryptionMethod("m",
+        QCommandLineOption encryptionMethod("method",
                                             "encryption method.",
                                             "method");
-        QCommandLineOption timeout("t",
+        QCommandLineOption timeout("timeout",
                                    "socket timeout in seconds.",
                                    "timeout");
         QCommandLineOption http(
