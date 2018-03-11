@@ -47,12 +47,12 @@ protected:
     void start()
     {
         QCoreApplication *app = application();
-        //app->setApplicationName("Shadowsocks-libQtShadowsocks");
-        //app->setApplicationVersion(Common::version());
+        app->setApplicationName("Shadowsocks-libQtShadowsocks");
+        app->setApplicationVersion(Common::version());
 
         client_ = new Client();
 
-        /*QCommandLineParser parser;
+        QCommandLineParser parser;
         parser.addHelpOption();
         parser.addVersionOption();
         QCommandLineOption configFile("c",
@@ -135,20 +135,6 @@ protected:
         }
 
         if (!client_->start(parser.isSet(serverMode))) {
-            std::cerr << "Cannot start client" << std::endl;
-        }*/
-
-        if (!client_->readConfig("config.json")) {
-            client_->setup("",
-                    "",
-                    "127.0.0.1",
-                    "",
-                    "",
-                    "",
-                    "",
-                    false);
-        }
-        if (!client_->start(false)) {
             std::cerr << "Cannot start client" << std::endl;
         }
     }
