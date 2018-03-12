@@ -77,6 +77,7 @@ Running as Windows Service
 - also remember to pass only absolute paths as command line options when starting the service
 
 - the service acts as a wrapper around the application and adds new command line options accessible when the application is started with:
+
   shadowsocks-libqss.exe -h
 
 - the application can still be started normally using "-e" option, followed by any number of options. For example, in order to show the original command line options use:
