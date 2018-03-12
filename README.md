@@ -69,6 +69,29 @@ Running as Windows Service
 
 - also remember to pass only absolute paths as command line options when starting the service
 
+- the service acts as a wrapper around the application and adds new command line options accessible when the application is started with:
+  shadowsocks-libqss.exe -h
+
+- the application can still be started normally using "-e" option, followed by any number of options. For example, in order to show the original command line options use:
+  shadowsocks-libqss.exe -e --help
+The same original options can be used also when starting the application as service.
+
+- in order to run the application as service, the service needs to be installed first with (you must start as Administrator the terminal):
+  shadowsocks-libqss.exe -i
+
+- in order to check the service status use (you must start as Administrator the terminal):
+  shadowsocks-libqss.exe -v
+
+- in order to start the service (you must start as Administrator the terminal):
+  shadowsocks-libqss.exe --config-file C:\config.json -f c:\shadowsocks.log
+Note that you can still use the options for the standalone application, but for the service the specified paths need to be absolute.
+
+- in order to stop the service (you must start as Administrator the terminal):
+  shadowsocks-libqss.exe -t
+
+- in order to uninstall the service (you must start as Administrator the terminal):
+  shadowsocks-libqss.exe -u
+
 License
 -------
 
