@@ -67,6 +67,19 @@ Compilation Instructions for Windows
 
   - in order to run the resulting binary make sure that the path to Qt DLLs is in your PATH environment variable (e.g. C:\Qt\5.10.1\msvc2015_64\bin) as well as the path to Botan library (e.g. C:\Botan\lib)
 
+Request at runtime Administrator privileges
+-------
+
+This step is requested if you want to automatically add Administrator privileges when starting the application.
+
+- open a Command Window and setup environment variables for Visual Studio 2015 by running
+
+  "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
+
+- copy shadowsocks-libqss.exe.manifest file next to the generated shadowsocks-libqss.exe file, then from the folder that contains both files run
+
+  mt -manifest shadowsocks-libqss.exe.manifest -outputresource:"shadowsocks-libqss.exe";#1
+
 Running as Windows Service
 -------
 
