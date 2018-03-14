@@ -151,12 +151,12 @@ private:
     Client *client_ = nullptr;
 };
 
-
 int main(int argc, char *argv[])
 {
     qInstallMessageHandler(Utils::messageHandler);
 
     ShadowsocksService service(argc, argv);
+    service.setStartupType(QtServiceController::AutoStartup);
 
     signal(SIGINT, onSIGINT_TERM);
     signal(SIGTERM, onSIGINT_TERM);
