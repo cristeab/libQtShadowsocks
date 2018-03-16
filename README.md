@@ -66,7 +66,7 @@ Compilation Instructions for Windows
 Request at runtime Administrator privileges
 -------
 
-This step is requested if you want to automatically add Administrator privileges when starting the application.
+This step is required if you want to automatically add Administrator privileges when starting the application.
 
 - open a Command Window and setup environment variables for Visual Studio 2015 by running
 
