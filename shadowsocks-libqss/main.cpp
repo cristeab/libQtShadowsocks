@@ -20,11 +20,16 @@
 
 #include <QCoreApplication>
 #include <QCommandLineParser>
+#include <QSettings>
 #include <signal.h>
 #include <iostream>
 #include "client.h"
 #include "utils.h"
 #include "qtservice.h"
+
+#define DEBUG_KEY "DEBUG KEY"
+#define LOG_FILE "LOG FILE"
+#define CONFIG_FILE "CONFIG FILE"
 
 using namespace QSS;
 
@@ -114,18 +119,40 @@ protected:
         parser.addOption(logFile);
         parser.process(*app);
 
-        Utils::debugEnabled = parser.isSet(debug);
-        Utils::initLogFile(parser.value(logFile));
+        //init settings
+        QSettings settings("C:\\shadowsocks.ini", QSettings::IniFormat);
 
-        if (!client_->readConfig(parser.value(configFile))) {
+        QString logFilename;
+        QString configFilename;
+        const int argc = parser.optionNames().size();
+        if (0 < argc) {
+            Utils::debugEnabled = parser.isSet(debug);
+            logFilename = parser.value(logFile);
+            configFilename = parser.value(configFile);
+
+            //save settings
+            settings.setValue(DEBUG_KEY, Utils::debugEnabled);
+            settings.setValue(LOG_FILE, logFilename);
+            settings.setValue(CONFIG_FILE, configFilename);
+            settings.sync();
+        } else {
+            //read saved settings
+            Utils::debugEnabled = settings.value(DEBUG_KEY, false).toBool();
+            logFilename = settings.value(LOG_FILE).toString();
+            configFilename = settings.value(CONFIG_FILE).toString();
+        }
+
+        Utils::initLogFile(logFilename);
+
+        if (!client_->readConfig(configFilename)) {
             client_->setup(parser.value(serverAddress),
-                    parser.value(serverPort),
-                    parser.value(localAddress),
-                    parser.value(localPort),
-                    parser.value(password),
-                    parser.value(encryptionMethod),
-                    parser.value(timeout),
-                    parser.isSet(http));
+                           parser.value(serverPort),
+                           parser.value(localAddress),
+                           parser.value(localPort),
+                           parser.value(password),
+                           parser.value(encryptionMethod),
+                           parser.value(timeout),
+                           parser.isSet(http));
         }
         client_->setAutoBan(parser.isSet(autoBan));
 
